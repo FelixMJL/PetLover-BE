@@ -5,7 +5,7 @@
 
 ----------------------------------------------------  
 How to run this app:  
-1. git checkout -b branch origin/develop //clone the develop branch to local  
+1. git checkout -b develop origin/develop //clone the develop branch to local  
 2. npm install  
 3. npm run dev // To start server  
 
