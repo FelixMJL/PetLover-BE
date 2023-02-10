@@ -1,0 +1,21 @@
+{
+  "name": "pet-lover-back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/pet-lover/pet-lover-back-end.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://bitbucket.org/pet-lover/pet-lover-back-end/issues"
+  },
+  "homepage": "https://bitbucket.org/pet-lover/pet-lover-back-end#readme"
+}
