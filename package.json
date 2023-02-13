@@ -1,21 +1,35 @@
 {
-  "name": "pet-lover-back-end",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@bitbucket.org/pet-lover/pet-lover-back-end.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://bitbucket.org/pet-lover/pet-lover-back-end/issues"
-  },
-  "homepage": "https://bitbucket.org/pet-lover/pet-lover-back-end#readme"
+    "name": "pet-lover-back-end",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon app/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@bitbucket.org/pet-lover/pet-lover-back-end.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://bitbucket.org/pet-lover/pet-lover-back-end/issues"
+    },
+    "homepage": "https://bitbucket.org/pet-lover/pet-lover-back-end#readme",
+    "dependencies": {
+        "bcrypt": "^5.1.0",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "express-async-errors": "^3.1.1",
+        "express-rate-limit": "^6.7.0",
+        "express-validator": "^6.14.3",
+        "joi": "^17.7.0",
+        "jsonwebtoken": "^9.0.0",
+        "mongoose": "^6.9.1",
+        "morgan": "^1.10.0",
+        "nodemon": "^2.0.20"
+    }
 }
