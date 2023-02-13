@@ -1,7 +1,8 @@
+const PostModel = require('../models/posts')
+
 //GET all posts
-exports.getAllPosts = (req, res) => {
-    res.json([
-        {content: 'react', author: '3231jji1h24j'},
-        {content: 'hello world', author: 'fajita2h24j'}
-    ])
+
+exports.getAllPosts = async (req, res) => {
+    const posts = await PostModel.find().exec();
+    res.json(posts)
 }
