@@ -4,6 +4,7 @@ const PostModel = require('../models/post')
 
 exports.getAllPosts = async (req, res) => {
     const posts = await PostModel.find().populate('author',{avatar:1, username:1,nickname:1}).exec();
+    // get all posts without user details
     // const posts = await PostModel.find().exec();
     res.json(posts)
 }
