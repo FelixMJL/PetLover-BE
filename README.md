@@ -1,12 +1,9 @@
 ### Begin to start
 
-#### install packages
-- npm i bcrypt cors dotenv express express-async-errors joi jsonwebtoken mongoose morgan express-rate-limit express-validator nodemon    
-
 ----------------------------------------------------  
 How to run this app:  
 1. git checkout -b develop origin/develop //clone the develop branch to local  
-2. npm install
+2. npm install  
 3. create .env file in your branch  
 4. in the .env, type: CONNECTION_STRING={database host + database_name} for example: CONNECTION_STRING=mongodb://localhost:27017/pet-lover  
 5. in your database, create a new database(ex. pet-lover) -> add two collections: posts and users -> import data using users.json and posts.json 
@@ -25,3 +22,7 @@ lsof -i tcp:3000
 
 2. close the Port by PID  
 kill -9 PID
+
+-------------------------------------------------------------------------------------------
+### Packages we use:
+- bcrypt cors dotenv express express-async-errors joi jsonwebtoken mongoose morgan express-rate-limit express-validator nodemon 
