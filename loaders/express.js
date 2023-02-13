@@ -3,6 +3,7 @@ const cors = require('cors')
 // const apiRouter = require('../app/routes/v1/api')
 const v1Router = require('../app/routes')
 const config = require('../app/config')
+const connectToDB = require("../app/utils/db");
 
 const startServer = () => {
     ////////////////////////////////
@@ -19,6 +20,9 @@ const startServer = () => {
         }
         console.log("SERVER STARTED")
     })
+
+    connectToDB();
+
     return application;
 }
 
