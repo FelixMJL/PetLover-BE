@@ -8,7 +8,11 @@
   "content": "Starship Super Heavy",
   "photo": "https://twitter.com/elonmusk/status/1624626672464195584/photo/1",
   "video": "",
-  "comments": [],
+  "comments": [
+    {
+      "$oid": "63eb18d4d7f5418c19c17b84"
+    }
+  ],
   "created_at": {
     "$date": {
       "$numberLong": "1676179314054"
