@@ -10,7 +10,3 @@ exports.getAComment = async (req, res) => {
   console.log(comment);
   res.json(comment);
 };
-
-exports.deleteAComment = async (req, res) => {};
-
-exports.findAComment = async (req, res) => {};
