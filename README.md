@@ -1,4 +1,6 @@
-### Begin to start
+### New Update - Feb 15th
+- add "comment_to" to Comments collection
+- modify "getAComment"
 
 ----------------------------------------------------  
 How to run this app:  
