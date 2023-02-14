@@ -1,7 +1,18 @@
-//GET all posts
-exports.getAllPosts = (req, res) => {
-    res.json([
-        {content: 'react', author: '3231jji1h24j'},
-        {content: 'hello world', author: 'fajita2h24j'}
-    ])
+const PostModel = require('../models/post')
+
+//GET all posts with user details
+
+exports.getAllPosts = async (req, res) => {
+    const posts = await PostModel.find().populate('author',{avatar:1, username:1,nickname:1}).exec();
+    // get all posts without user details
+    // const posts = await PostModel.find().exec();
+    res.json(posts)
+}
+
+//Create a post
+exports.addAPost = async (req,res) => {
+    const {author, content, photo, video} = req.body;
+    const post = new PostModel({author,content,photo,video});
+    await post.save();
+    res.status(201).json(post)
 }
