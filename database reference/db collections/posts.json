@@ -254,4 +254,26 @@
       "$numberLong": "1676199440242"
     }
   }
+},{
+  "_id": {
+    "$oid": "63ea42075a1826f5406bd1de"
+  },
+  "author": {
+    "$oid": "63e8768a21bfd46ae27cbda3"
+  },
+  "content": "hello",
+  "photo": "",
+  "video": "",
+  "comments": [],
+  "created_at": {
+    "$date": {
+      "$numberLong": "1676296711884"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1676296711884"
+    }
+  },
+  "__v": 0
 }]
