@@ -1,9 +1,10 @@
 ### New Update - Feb 15th
-- add "comment_to" to Comments collection
-- modify "getAComment"
+- add "comment_to" to Comments collection  
+- modify "getAComment"  
+- update UerModel -- Remove required attribute from avatar  
 
 ----------------------------------------------------  
-How to run this app:  
+### How to run this app:  
 1. git checkout -b develop origin/develop //clone the develop branch to local  
 2. npm install  
 3. create .env file in your branch  
@@ -17,7 +18,7 @@ At this stage, you can successfully connect to the database and use postman to g
 -- Get: localhost:3000/api/v1/users  
 -- Get: localhost:3000/api/v1/comments/63eb18d4d7f5418c19c17b84  
 -------------------------------------------------------------------------------------------
-Tips:
+### Tips:  
 When you happen to the situation that you cannot start server because the port is occupied,  
 you need to close the port first. We use port 3000 as an example:  
 

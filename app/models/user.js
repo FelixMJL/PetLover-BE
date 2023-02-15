@@ -42,7 +42,6 @@ const schema = new Schema(
         ],
         avatar: {
             type: String,
-            required: true,
         },
         introduction: {
             type: String,
