@@ -16,3 +16,22 @@ exports.addAPost = async (req,res) => {
     await post.save();
     res.status(201).json(post)
 }
+
+//Delete a post
+exports.deletePostById = async (req, res) => {
+    const {id} = req.params
+    const post = await PostModel.findByIdAndDelete(id).exec()
+    if(!post){
+        res.status(404).json({error: 'post not found'})
+        return
+    }
+    await PostModel.updateMany(
+        {posts: id},
+        {
+            $pull: {
+                posts: id
+            }
+        }
+    ).exec()
+    res.sendStatus(204)
+}
