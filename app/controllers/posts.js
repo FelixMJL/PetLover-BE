@@ -1,11 +1,13 @@
 const PostModel = require('../models/post')
 
-//GET all posts with user details
-
+// Find all posts with user detail
+// Situation：Recommend for you page
 exports.getAllPosts = async (req, res) => {
-    const posts = await PostModel.find().populate('author',{avatar:1, username:1,nickname:1}).exec();
-    // get all posts without user details
-    // const posts = await PostModel.find().exec();
+    const posts = await PostModel.find().populate(
+        'author',
+        {avatar: 1, username: 1, nickname: 1})
+        .sort({created_at:-1})
+        .exec();
     res.json(posts)
 }
 
