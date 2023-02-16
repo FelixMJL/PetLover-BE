@@ -1,28 +1,6 @@
 const CommentModel = require('../models/comment');
 const PostModel = require('../models/post');
 
-<<<<<<< HEAD
-exports.deleteAComment = async (req, res) => {
-  try {
-    const commentId = req.params.id;
-    const currentComment = await CommentModel.findById(commentId);
-    const postId = currentComment.comment_to;
-    const newPost = await PostModel.findByIdAndUpdate(
-      postId,
-      {
-        $pull: { comments: commentId },
-      },
-      { new: true }
-    );
-    await CommentModel.findByIdAndDelete(commentId);
-
-    res.status(200).json(newPost);
-  } catch (err) {
-    res.status(404).json('comment can not be found');
-  }
-};
-=======
->>>>>>> 1cafc81e7a3519c86dc3914d0c7e598b897d0c62
 exports.addAComment = async (req, res) => {
   try {
     const newComment = new CommentModel(req.body);
@@ -43,17 +21,15 @@ exports.deleteAComment = async (req, res) => {
     const currentComment = await CommentModel.findById(commentId);
     const postId = currentComment.comment_to;
     const newPost = await PostModel.findByIdAndUpdate(
-        postId,
-        {
-          $pull: {comments: commentId},
-        },
-        {new: true}
+      postId,
+      {
+        $pull: { comments: commentId },
+      },
+      { new: true }
     );
     await CommentModel.findByIdAndDelete(commentId);
     res.status(200).json(newPost);
   } catch (err) {
     res.status(404).json('comment can not be found');
   }
-}
-
-
+};
