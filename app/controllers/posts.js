@@ -26,19 +26,17 @@ exports.addAPost = async (req,res) => {
                 }
             }
         )
+        await post.save();
         res.status(201).json(post)
     } catch (error) {
         res.status(500).json(error.message)
     }
-    const {author, content, photo, video} = req.body;
-    const post = new PostModel({author,content,photo,video});
-    await post.save();
-    res.status(201).json(post)
 }
 
 //Delete a post
 exports.deletePostById = async (req, res) => {
     const {id} = req.params
+    const {author} = req.body;
     const post = await PostModel.findByIdAndDelete(id).exec()
     if(!post){
         res.status(404).json({error: 'post not found'})
@@ -46,6 +44,14 @@ exports.deletePostById = async (req, res) => {
     }
     await PostModel.updateMany(
         {posts: id},
+        {
+            $pull: {
+                posts: id
+            }
+        }
+    ).exec()
+    await UserModel.updateOne(
+        author, 
         {
             $pull: {
                 posts: id
