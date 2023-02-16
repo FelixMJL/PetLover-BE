@@ -3,7 +3,7 @@ const UserModel = require('../models/user')
 
 // Find all posts with user detail
 // Situation：Recommend for you page
-exports.getAllPosts = async (req, res) => {
+exports.index = async (req, res) => {
     const posts = await PostModel.find().populate(
         'author',
         {avatar: 1, username: 1, nickname: 1})
@@ -13,7 +13,7 @@ exports.getAllPosts = async (req, res) => {
 }
 
 //Create a post
-exports.addAPost = async (req,res) => {
+exports.store = async (req,res) => {
     try {
         const {author, content, photo, video} = req.body;
         const post = new PostModel({author,content,photo,video});
@@ -34,7 +34,7 @@ exports.addAPost = async (req,res) => {
 }
 
 //Delete a post
-exports.deletePostById = async (req, res) => {
+exports.delete = async (req, res) => {
     try {
         const {id} = req.params
         const {author} = req.body;
@@ -63,4 +63,45 @@ exports.deletePostById = async (req, res) => {
     } catch (error) {
         res.status(500).json(error.message)
     }  
+}
+
+// Find following's posts
+exports.getAllPostsOfFollowing = async (req, res) => {
+    try {
+        const {id} = req.params
+        const user = await UserModel.findById(id).exec()
+        if(!user){
+            res.status(404).json({error: 'user not found'})
+            return
+        }
+        const followings = user.following
+        const posts = await PostModel.find({author: {$in: followings}}).populate(
+            'author',
+            {avatar: 1, username: 1, nickname: 1})
+            .sort({created_at:-1})
+            .exec();
+        res.json(posts)
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
+}
+
+// Find post by id
+exports.show = async (req, res) => {
+    try {
+        const {id} = req.params
+        const post = await PostModel.findById(id).populate(
+            'author',
+            {avatar: 1, username: 1, nickname: 1})
+            .sort({created_at:-1})
+            .populate('comments')
+            .exec()
+        if(!post) {
+            res.status(404).json({error: 'post not found'})
+            return
+        }
+        res.json(post)
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
 }
