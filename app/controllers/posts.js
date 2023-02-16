@@ -1,4 +1,5 @@
 const PostModel = require('../models/post')
+const UserModel = require('../models/user')
 
 // Find all posts with user detail
 // Situation：Recommend for you page
@@ -13,6 +14,22 @@ exports.getAllPosts = async (req, res) => {
 
 //Create a post
 exports.addAPost = async (req,res) => {
+    try {
+        const {author, content, photo, video} = req.body;
+        const post = new PostModel({author,content,photo,video});
+        const savedPost = await post.save();
+        await UserModel.findByIdAndUpdate(
+            author, 
+            {
+                $push: {
+                    posts: savedPost._id
+                }
+            }
+        )
+        res.status(201).json(post)
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
     const {author, content, photo, video} = req.body;
     const post = new PostModel({author,content,photo,video});
     await post.save();
