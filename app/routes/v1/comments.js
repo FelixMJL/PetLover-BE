@@ -1,8 +1,8 @@
-const comments = require("../../controllers/comments");
-const {Router} = require("express");
+const comments = require('../../controllers/comments');
+const { Router } = require('express');
 
 const commentRouter = Router();
 
-commentRouter.get('/:id', comments.getAComment);
+commentRouter.post('/', comments.addAComment);
 
 module.exports = commentRouter;
