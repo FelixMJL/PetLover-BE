@@ -7,7 +7,7 @@ postRouter.get('', posts.index);
 postRouter.post('', posts.store);
 postRouter.delete('/:id', posts.delete);
 postRouter.get('/users/:id', posts.getAllPostsOfFollowing);
-postRouter.get(':/id', posts.show);
+postRouter.get('/:id', posts.show);
 
 
 module.exports = postRouter;
