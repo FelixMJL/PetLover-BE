@@ -1,4 +1,5 @@
 const PostModel = require('../models/post')
+const UserModel = require('../models/user')
 
 //GET all posts with user details
 
@@ -11,8 +12,22 @@ exports.getAllPosts = async (req, res) => {
 
 //Create a post
 exports.addAPost = async (req,res) => {
-    const {author, content, photo, video} = req.body;
-    const post = new PostModel({author,content,photo,video});
-    await post.save();
-    res.status(201).json(post)
+    try {
+        const {author, content, photo, video} = req.body;
+        const post = new PostModel({author,content,photo,video});
+        const savedPost = await post.save();
+        await UserModel.findByIdAndUpdate(
+            author, 
+            {
+                $push: {
+                    posts: savedPost._id
+                }
+            }
+        )
+        res.status(201).json(post)
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
+
+    
 }
