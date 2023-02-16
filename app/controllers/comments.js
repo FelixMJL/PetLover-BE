@@ -18,6 +18,8 @@ exports.deleteAComment = async (req, res) => {
     res.status(200).json(newPost);
   } catch (err) {
     res.status(404).json('comment can not be found');
+  }
+};
 exports.addAComment = async (req, res) => {
   try {
     const newComment = new CommentModel(req.body);
