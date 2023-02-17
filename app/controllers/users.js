@@ -13,6 +13,7 @@ exports.getUserById = async (req, res) => {
         const user = await UserModel.findById(id).populate('posts').exec()
         if (!user) {
             res.status(404).json({ error: "user not exist" })
+            return
         }
         res.json(user)
     }catch(e){
@@ -55,6 +56,7 @@ exports.UserProfileEdit = async (req, res) => {
     try{
         const { id } = req.params
         const {
+            nickname,
             location,
             avatar,
             introduction,
@@ -64,6 +66,7 @@ exports.UserProfileEdit = async (req, res) => {
         const userUpdated = await UserModel.findByIdAndUpdate(
             id,
             {
+                nickname,
                 location,
                 avatar,
                 introduction,
