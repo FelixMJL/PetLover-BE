@@ -3,7 +3,6 @@ const UserModel = require('../models/user')
 // Find all users with posts spread  PL-44
 exports.getAllUsers = async (req, res) => {
     const users =await UserModel.find().populate('posts').exec()
-    console.log(users);
     res.json(users)
 }
 
