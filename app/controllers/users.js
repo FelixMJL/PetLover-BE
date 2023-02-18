@@ -85,3 +85,22 @@ exports.UserProfileEdit = async (req, res) => {
         res.status(404).json({error:"id must be a string of 12 bytes or a string of 24 hex characters or an integer"})
     }
 }
+
+// show one user's followings
+exports.getAllFollowingsOfAUser = async (req, res) => {
+    try {
+        const { id } = req.params
+        const user = await UserModel.findById(id)
+        const followings = await UserModel.findById(id).populate(
+            'following',
+            {avatar: 1, username: 1, nickname: 1}
+        ).exec()
+        if (!user) {
+            res.status(404).json({ error: "user not exist" })
+            return
+        }
+        res.json(followings)
+    } catch (error) {
+        res.status(404).json({error:"id must be a string of 12 bytes or a string of 24 hex characters or an integer"})
+    }
+}
