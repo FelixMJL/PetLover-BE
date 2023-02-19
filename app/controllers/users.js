@@ -93,7 +93,7 @@ exports.getAllFollowingsOfAUser = async (req, res) => {
         const user = await UserModel.findById(id)
         const followings = await UserModel.findById(id).populate(
             'following',
-            {avatar: 1, username: 1, nickname: 1}
+            {avatar: 1, username: 1, nickname: 1, introduction: 1}
         ).exec()
         if (!user) {
             res.status(404).json({ error: "user not exist" })
