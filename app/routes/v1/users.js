@@ -7,5 +7,6 @@ userRouter.get('', users.getAllUsers);
 userRouter.get('/:id', users.getUserById);
 userRouter.post('', users.UserRegistration);
 userRouter.put('/:id', users.UserProfileEdit);
+userRouter.get('/:id/following', users.getAllFollowingsOfAUser)
 
 module.exports = userRouter;
