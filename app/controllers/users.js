@@ -85,7 +85,55 @@ exports.UserProfileEdit = async (req, res) => {
         res.status(404).json({error:"id must be a string of 12 bytes or a string of 24 hex characters or an integer"})
     }
 }
+//Follow a user PL-52
+exports.followAUser = async (req, res) => {
+   try {
+        const { followedId, followerId } = req.params
+        const followedUser = await UserModel.findById(followedId).exec()
+		const follower = await UserModel.findById(followerId).exec()
+		// check if student and course exists
+  		if ( !followedUser || !follower) {
+    		res.status(404).json({ error: 'user not found' });
+   			return;
+  		 }
+        followedUser.followers.addToSet(followerId);
+		await followedUser.save();
+		follower.following.addToSet(followedId);
+		await follower.save();
+        res.json(followedUser)
+    }catch(e){
+        res.status(500).json(e.message)
+    } 
+} 
 
+//unfollow a user PL-53
+exports.unfollowAUser = async (req, res) => {
+    try {
+        const { followedId, followerId } = req.params
+        let followedUser = await UserModel.findById(followedId).exec()
+		const follower = await UserModel.findById(followerId).exec()
+		// check if student and course exists
+  		if (!followedUser || !follower) {
+    		res.status(404).json({ error: 'user not found' });
+   			return;
+  		 }
+		  followedUser = await UserModel.findByIdAndUpdate(
+			followedId,
+			{
+			  $pull: {
+				followers: followerId,
+			  },
+			},
+			{ new: true }
+		  ).exec();
+		  await UserModel.findByIdAndUpdate(followerId, {
+			$pull: { following: followedId },
+		  }).exec();
+        res.json(followedUser)
+    } catch (e){
+        res.status(500).json(e.message)
+    }
+}
 // show one user's followings
 exports.getAllFollowingsOfAUser = async (req, res) => {
     try {
