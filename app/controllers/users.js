@@ -2,7 +2,7 @@ const UserModel = require('../models/user')
 const {generateToken} = require('../utils/jwt');
 
 //users registration by username password nickname email PL-41 PL-49
-//POST localhost:3000/api/v1/users/register
+//POST localhost:3000/api/v1/users
 exports.UserRegistration = async (req, res) => {
     try {
         const {username, password, nickname, email} = req.body;
