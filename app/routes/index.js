@@ -3,7 +3,6 @@ const postRouter = require("./v1/posts");
 const userRouter = require("./v1/users");
 const commentRouter = require("./v1/comments");
 
-
 const v1Router = Router();
 
 v1Router.use('/posts', postRouter);
