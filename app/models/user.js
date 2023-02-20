@@ -64,7 +64,7 @@ schema.methods.hashPassword = async function () {
 };
 
 schema.methods.validatePassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
+    return  bcrypt.compare(password, this.password);
 };
 
 module.exports = model('User',schema)

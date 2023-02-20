@@ -6,7 +6,10 @@ const {generateToken} = require('../utils/jwt');
 exports.UserRegistration = async (req, res) => {
     try {
         const {username, password, nickname, email} = req.body;
-
+        if(!username||!password||!nickname||!email){
+            res.status(401).json({error: 'register info is not complete'});
+            return;
+        }
         if (await UserModel.findOne({username}).exec()) {
             res.send(`User name --${username}-- has been used please change another one`)
             return;
@@ -32,12 +35,17 @@ exports.UserRegistration = async (req, res) => {
 exports.userLogin = async (req, res) => {
     try {
         const {email, password} = req.body
+        if(!email||!password){
+            res.status(401).json({error: 'login info is not complete'});
+            return;
+        }
         const user = await UserModel.findOne({email}).exec()
         if (!user) {
             res.status(401).json({error: 'invalid email or password'});
             return;
         }
-        if (!user.validatePassword(password)) {
+
+        if (! await user.validatePassword(password.toString())) {
             res.status(401).json({error: 'invalid email or password'});
             return;
         }
