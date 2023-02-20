@@ -27,6 +27,27 @@ exports.UserRegistration = async (req, res) => {
     }
 }
 
+// user login PL-50
+// POST localhost:3000/api/v1/users/login
+exports.userLogin = async (req, res) => {
+    try {
+        const {email, password} = req.body
+        const user = await UserModel.findOne({email}).exec()
+        if (!user) {
+            res.status(401).json({error: 'invalid email or password'});
+            return;
+        }
+        if (!user.validatePassword(password)) {
+            res.status(401).json({error: 'invalid email or password'});
+            return;
+        }
+        const token = generateToken({id: user.id,email}); // roles: []
+        res.status(201).json({email, token});
+    } catch(e){
+        res.status(500).send({error: 'server error'})
+    }
+}
+
 
 // Find all users with posts spread  PL-44
 // GET localhost:3000/api/v1/users

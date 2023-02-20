@@ -4,6 +4,7 @@ const userRouter = Router();
 const authGuard = require("../../middleware/authGuards");
 
 userRouter.post('', users.UserRegistration);
+userRouter.post('/login', users.userLogin);
 userRouter.use(authGuard)
 userRouter.get('', users.getAllUsers);
 userRouter.get('/:id', users.getUserById);
