@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const schema = new Schema(
     {
-        comment_by: {
+        author: {
             type: Schema.Types.ObjectId,
             ref: "User",
             required: true,
@@ -10,19 +10,20 @@ const schema = new Schema(
         comment_to: {
             type: Schema.Types.ObjectId,
             ref: "Post",
-            required: true,
         },
         comment: {
             type: String,
-            required: true,
         },
-        comments: [
+        reply: {
+            type: String,
+        },
+        replies: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "Comment",
             },
         ],
-        parent_id: {
+        reply_to: {
             type: Schema.Types.ObjectId,
             ref: "Comment",
         },
