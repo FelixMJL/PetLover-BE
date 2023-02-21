@@ -118,7 +118,7 @@ exports.UserProfileEdit = async (req, res) => {
 //Follow a user PL-52
 exports.followAUser = async (req, res) => {
    try {
-        const { followedId, followerId } = req.params
+        const { followerId, followedId } = req.params
         const followedUser = await UserModel.findById(followedId).exec()
 		const follower = await UserModel.findById(followerId).exec()
 		// check if student and course exists
@@ -139,7 +139,7 @@ exports.followAUser = async (req, res) => {
 //unfollow a user PL-53
 exports.unfollowAUser = async (req, res) => {
     try {
-        const { followedId, followerId } = req.params
+        const { followerId, followedId } = req.params
         let followedUser = await UserModel.findById(followedId).exec()
 		const follower = await UserModel.findById(followerId).exec()
 		// check if student and course exists
