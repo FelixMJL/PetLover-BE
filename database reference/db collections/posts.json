@@ -10,76 +10,17 @@
   "video": "",
   "comments": [
     {
-      "$oid": "63eb18d4d7f5418c19c17b84"
+      "$oid": "63f47b1bf1c9d30f05540a47"
     }
   ],
   "created_at": {
     "$date": {
       "$numberLong": "1676179314054"
     }
-  }
-},{
-  "_id": {
-    "$oid": "63e877ce21bfd46ae27cbda5"
   },
-  "author": {
-    "$oid": "63e8768a21bfd46ae27cbda3"
-  },
-  "content": "Some of the smartest people I know actively believe the press … amazing\n",
-  "photo": "",
-  "video": "",
-  "comments": [],
-  "created_at": {
+  "updated_at": {
     "$date": {
-      "$numberLong": "1676179406885"
-    }
-  }
-},{
-  "_id": {
-    "$oid": "63e8780921bfd46ae27cbda6"
-  },
-  "author": {
-    "$oid": "63e8768a21bfd46ae27cbda3"
-  },
-  "content": "This test is at ~50% throttle. Launch attempt next month will be at ~90%.",
-  "photo": "",
-  "video": "https://twitter.com/i/status/1623812763415093249",
-  "comments": [],
-  "created_at": {
-    "$date": {
-      "$numberLong": "1676179465716"
-    }
-  }
-},{
-  "_id": {
-    "$oid": "63e8786021bfd46ae27cbda7"
-  },
-  "author": {
-    "$oid": "63e8768a21bfd46ae27cbda3"
-  },
-  "content": "And making a day in the life videos\n",
-  "photo": "https://twitter.com/elonmusk/status/1624093894031056898/photo/1",
-  "video": "",
-  "comments": [],
-  "created_at": {
-    "$date": {
-      "$numberLong": "1676179552714"
-    }
-  }
-},{
-  "_id": {
-    "$oid": "63e8791221bfd46ae27cbda8"
-  },
-  "author": {
-    "$oid": "63e8768a21bfd46ae27cbda3"
-  },
-  "content": "Attempting Starship 33 engine static fire",
-  "photo": "https://twitter.com/NASASpaceflight/status/1623784546800922629/photo/1",
-  "video": "",
-  "comments": [],
-  "created_at": {
-    "$date": {
-      "$numberLong": "1676179730211"
+      "$numberLong": "1676966683307"
     }
   }
 },{
@@ -97,6 +38,11 @@
     "$date": {
       "$numberLong": "1676190207939"
     }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1676528106774"
+    }
   }
 },{
   "_id": {
@@ -112,6 +58,11 @@
   "created_at": {
     "$date": {
       "$numberLong": "1676190558046"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1676528106774"
     }
   }
 },{
@@ -129,6 +80,11 @@
     "$date": {
       "$numberLong": "1676190659179"
     }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1676528106774"
+    }
   }
 },{
   "_id": {
@@ -144,6 +100,11 @@
   "created_at": {
     "$date": {
       "$numberLong": "1676192374628"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1676528106774"
     }
   }
 },{
@@ -161,6 +122,11 @@
     "$date": {
       "$numberLong": "1676192561927"
     }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1676528106774"
+    }
   }
 },{
   "_id": {
@@ -176,6 +142,11 @@
   "created_at": {
     "$date": {
       "$numberLong": "1676192687112"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1676528106774"
     }
   }
 },{
@@ -193,6 +164,11 @@
     "$date": {
       "$numberLong": "1676192900701"
     }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1676528106774"
+    }
   }
 },{
   "_id": {
@@ -208,6 +184,11 @@
   "created_at": {
     "$date": {
       "$numberLong": "1676193276955"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1676528106774"
     }
   }
 },{
@@ -225,6 +206,11 @@
     "$date": {
       "$numberLong": "1676193550538"
     }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1676528106774"
+    }
   }
 },{
   "_id": {
@@ -240,6 +226,11 @@
   "created_at": {
     "$date": {
       "$numberLong": "1676199329937"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1676528106774"
     }
   }
 },{
@@ -257,27 +248,10 @@
     "$date": {
       "$numberLong": "1676199440242"
     }
-  }
-},{
-  "_id": {
-    "$oid": "63ea42075a1826f5406bd1de"
-  },
-  "author": {
-    "$oid": "63e8768a21bfd46ae27cbda3"
-  },
-  "content": "hello",
-  "photo": "",
-  "video": "",
-  "comments": [],
-  "created_at": {
-    "$date": {
-      "$numberLong": "1676296711884"
-    }
   },
   "updated_at": {
     "$date": {
-      "$numberLong": "1676296711884"
+      "$numberLong": "1676528106774"
     }
-  },
-  "__v": 0
+  }
 }]

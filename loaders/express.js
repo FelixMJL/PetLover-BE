@@ -1,8 +1,10 @@
 const express = require('express')
+require("express-async-errors");
 const cors = require('cors')
 const v1Router = require('../app/routes')
 const config = require('../app/config')
 const connectToDB = require("../app/utils/db");
+const errorHandler = require("../app/middleware/errorHandler")
 
 const startServer = () => {
     ////////////////////////////////
@@ -37,5 +39,6 @@ module.exports = () => {
     app.use(cors())
     app.use(express.json())
     app.use(config.api.prefix, v1Router);
+    app.use(errorHandler);
     return app;
 }
