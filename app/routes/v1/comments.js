@@ -5,9 +5,11 @@ const authGuard = require("../../middleware/authGuards");
 const commentRouter = Router();
 
 commentRouter.use(authGuard)
-commentRouter.delete('/:id', comments.deleteAComment);
-commentRouter.post('/', comments.addAComment);
-commentRouter.get('/:id', comments.getAComment);
-commentRouter.delete('/:id', comments.deleteAComment);
+commentRouter.post('', comments.store);
+commentRouter.post('/replies', comments.addAReply);
+commentRouter.get('/:id', comments.show);
+commentRouter.delete('/:id', comments.delete);
+
+
 
 module.exports = commentRouter;
