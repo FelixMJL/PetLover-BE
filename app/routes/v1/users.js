@@ -9,8 +9,8 @@ userRouter.use(authGuard)
 userRouter.get('', users.getAllUsers);
 userRouter.get('/:id', users.getUserById);
 userRouter.put('/:id', users.UserProfileEdit);
-userRouter.post('/:followerId/following/:followedId', users.followAUser);
-userRouter.delete('/:followerId/following/:followedId', users.unfollowAUser);
+userRouter.post('/:currentUserId/following/:targetUserId', users.followAUser);
+userRouter.delete('/:currentUserId/unfollowing/:targetUserId', users.unfollowAUser);
 userRouter.get('/:id/following', users.getAllFollowingsOfAUser)
 userRouter.get('/:id/follower', users.getAllFollowersOfAUser)
 
