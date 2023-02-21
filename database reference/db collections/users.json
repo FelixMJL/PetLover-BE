@@ -21,23 +21,15 @@
       "$oid": "63e8777221bfd46ae27cbda4"
     },
     {
-      "$oid": "63e877ce21bfd46ae27cbda5"
-    },
-    {
-      "$oid": "63e8780921bfd46ae27cbda6"
-    },
-    {
-      "$oid": "63e8786021bfd46ae27cbda7"
-    },
-    {
-      "$oid": "63e8791221bfd46ae27cbda8"
+      "$oid": "63ef3e8260257a87d3c6c86a"
     }
   ],
   "created_at": {
     "$date": {
       "$numberLong": "1676179082395"
     }
-  }
+  },
+  "__v": 6
 },{
   "_id": {
     "$oid": "63e8a0f06c62483b63fc4c50"
@@ -67,7 +59,8 @@
     "$date": {
       "$numberLong": "1676189936675"
     }
-  }
+  },
+  "__v": 6
 },{
   "_id": {
     "$oid": "63e8a6c46c62483b63fc4c54"
@@ -167,6 +160,9 @@
     },
     {
       "$oid": "63e8c6106c62483b63fc4c5e"
+    },
+    {
+      "$oid": "63ed561db943539d9b7e6f84"
     }
   ],
   "created_at": {
@@ -174,4 +170,32 @@
       "$numberLong": "1676193476497"
     }
   }
+},{
+  "_id": {
+    "$oid": "63ef1c5476af713d9a9a55c6"
+  },
+  "username": "xiaofangzong1",
+  "nickname": "Ryan Fang112",
+  "email": "fangweidong@gmail.com",
+  "password": "$2b$12$k7jiDgAdvCYNGeL4ELoJHev5NN90MjGiNug6p.5PSUPRKWts5aWfC",
+  "following": [],
+  "followers": [],
+  "posts": [],
+  "__v": 0,
+  "avatar": "https://xiaofangzong.png",
+  "introduction": "",
+  "location": "Melbourne",
+  "website_url": "https://www.linkedin.com/in/weidong-ryan/"
+},{
+  "_id": {
+    "$oid": "63f318d5c4abfe81ed740d58"
+  },
+  "username": "xiaowu",
+  "nickname": "Ryan",
+  "email": "xiaowu@gmail.com",
+  "password": "$2b$12$ul6d61FTzGZGWowOWHxqqO33k0eAu3WWiKQ4D7NVilkI3NSCxWEmq",
+  "following": [],
+  "followers": [],
+  "posts": [],
+  "__v": 0
 }]
