@@ -1,20 +1,14 @@
 const posts = require("../../controllers/posts");
 const {Router} = require("express");
 const authGuard = require("../../middleware/authGuards");
-
-
 const postRouter = Router();
 
-
 //User login first get the token than use the token do authorization
-//POST localhost:3000/api/v1/users/login
-postRouter.use(authGuard);
-postRouter.get('', posts.index);
-postRouter.post('', posts.store);
-postRouter.delete('/:id', posts.delete);
-postRouter.get('/users/:id', posts.getAllPostsOfFollowing);
-postRouter.get('/:id', posts.show);
-
+postRouter.get('/posts', authGuard, posts.index);
+postRouter.post('/posts', authGuard, posts.store);
+postRouter.delete('/posts/:id', authGuard, posts.delete);
+postRouter.get('/posts/:id', authGuard, posts.show);
+postRouter.get('/posts/users/:id', authGuard, posts.getAllPostsOfFollowing);
 
 
 module.exports = postRouter;

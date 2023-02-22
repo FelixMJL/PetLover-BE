@@ -1,10 +1,12 @@
 const CommentModel = require('../models/comment');
 const PostModel = require('../models/post');
+const {validationResult} = require("express-validator");
 
 exports.store = async (req, res) => {
     const {author, comment_to, comment} = req.body;
-    if (!comment_to || !comment) {
-        res.status(400).json("comment_to and comment are required")
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        res.status(422).json({errors:errors})
         return
     }
     const newComment = new CommentModel({author, comment_to, comment});
@@ -51,10 +53,11 @@ exports.delete = async (req, res) => {
 }
 
 // Add a reply to a comment PL-56
-exports.addAReply = async (req, res) => {
+exports.store = async (req, res) => {
     const {author, reply_to, reply} = req.body;
-    if (!reply_to || !reply) {
-        res.status(400).json("reply_to and reply are required")
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        res.status(422).json({errors:errors})
         return
     }
     const newReply = new CommentModel({author,reply_to,reply})
