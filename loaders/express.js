@@ -7,7 +7,8 @@ const errorHandler = require("../app/middleware/errorHandler")
 const commentRouter = require("../app/routes/v1/comments");
 const userRouter = require("../app/routes/v1/users");
 const postRouter = require("../app/routes/v1/posts");
-const tokenErrorHandler = require("../app/middleware/tokenErrorHandler")
+const replyRouter = require("../app/routes/v1/replies");
+
 
 const startServer = () => {
     ////////////////////////////////
@@ -44,7 +45,7 @@ module.exports = () => {
     app.use(config.api.prefix, userRouter);
     app.use(config.api.prefix, commentRouter);
     app.use(config.api.prefix, postRouter);
-    app.use(tokenErrorHandler);
+    app.use(config.api.prefix, replyRouter);
     app.use(errorHandler);
 
     return app;
