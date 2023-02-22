@@ -3,7 +3,7 @@ const {generateToken} = require('../utils/jwt');
 
 //users registration by username password nickname email PL-41 PL-49
 //POST localhost:3000/api/v1/users
-exports.UserRegistration = async (req, res) => {
+exports.registration = async (req, res) => {
     try {
         const {username, password, nickname, email} = req.body;
         if(!username||!password||!nickname||!email){
@@ -32,7 +32,7 @@ exports.UserRegistration = async (req, res) => {
 
 // user login PL-50
 // POST localhost:3000/api/v1/users/login
-exports.userLogin = async (req, res) => {
+exports.login = async (req, res) => {
     try {
         const {email, password} = req.body
         if(!email||!password){
@@ -59,14 +59,14 @@ exports.userLogin = async (req, res) => {
 
 // Find all users with posts spread  PL-44
 // GET localhost:3000/api/v1/users
-exports.getAllUsers = async (req, res) => {
+exports.index = async (req, res) => {
     const users = await UserModel.find().populate('posts').exec()
     res.json(users)
 }
 
 // Find a user by ID with his all posts spread PL-43
 // GET localhost:3000/api/v1/users/:id
-exports.getUserById = async (req, res) => {
+exports.show = async (req, res) => {
     try {
         const {id} = req.params
         const user = await UserModel.findById(id).populate('posts').exec()
@@ -82,7 +82,7 @@ exports.getUserById = async (req, res) => {
 
 //Edit user profile PL-42
 //PUT localhost:3000/api/v1/users/:id
-exports.UserProfileEdit = async (req, res) => {
+exports.update = async (req, res) => {
     try {
         const {id} = req.params
         const {

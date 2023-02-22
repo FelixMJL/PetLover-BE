@@ -1,10 +1,13 @@
 const express = require('express')
 require("express-async-errors");
 const cors = require('cors')
-const v1Router = require('../app/routes')
 const config = require('../app/config')
 const connectToDB = require("../app/utils/db");
 const errorHandler = require("../app/middleware/errorHandler")
+const commentRouter = require("../app/routes/v1/comments");
+const userRouter = require("../app/routes/v1/users");
+const postRouter = require("../app/routes/v1/posts");
+const tokenErrorHandler = require("../app/middleware/tokenErrorHandler")
 
 const startServer = () => {
     ////////////////////////////////
@@ -38,7 +41,11 @@ module.exports = () => {
     const app = startServer()
     app.use(cors())
     app.use(express.json())
-    app.use(config.api.prefix, v1Router);
+    app.use(config.api.prefix, userRouter);
+    app.use(config.api.prefix, commentRouter);
+    app.use(config.api.prefix, postRouter);
+    app.use(tokenErrorHandler);
     app.use(errorHandler);
+
     return app;
 }
