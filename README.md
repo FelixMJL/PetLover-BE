@@ -15,9 +15,12 @@
 When you happen to the situation that you cannot start server because the port is occupied,  
 you need to close the port first. We use port 3000 as an example:  
 
+Method 1:  
+kill -9 $(lsof -ti:3000)  
+
+Method 2:
 1. Check the PID and get it  
 lsof -i tcp:3000  
-
 2. close the Port by PID  
 kill -9 PID
 

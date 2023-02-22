@@ -47,30 +47,21 @@ exports.show = async (req, res) => {
 
 //Delete a post
 exports.delete = async (req, res) => {
-    const {id} = req.params
-    const {author} = req.body;
-    const post = await PostModel.findByIdAndDelete(id).exec()
+    const {id} = req.params;
+    const post = await PostModel.findById(id).exec();
     if (!post) {
-        res.status(404).json({error: 'post not found'})
+        res.status(404).json({error: "post not found"})
         return
     }
-    await PostModel.updateMany(
-        {posts: id},
+    await UserModel.findByIdAndUpdate(
+        post.author,
         {
-            $pull: {
-                posts: id
-            }
-        }
-    ).exec()
-    await UserModel.updateOne(
-        author,
-        {
-            $pull: {
-                posts: id
-            }
-        }
-    ).exec()
-    res.sendStatus(204)
+            $pull: {posts: id}
+        },
+        {new: true}
+    ).exec();
+    await PostModel.findByIdAndDelete(id).exec()
+    res.sendStatus(204);
 }
 
 // Find following's posts

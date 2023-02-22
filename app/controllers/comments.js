@@ -1,12 +1,24 @@
 const CommentModel = require('../models/comment');
 const PostModel = require('../models/post');
 const {validationResult} = require("express-validator");
+const UserModel = require("../models/user");
 
+// Add a comment
 exports.store = async (req, res) => {
     const {author, comment_to, comment} = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.status(422).json({errors: errors})
+        return
+    }
+    const user = await UserModel.findById(author).exec();
+    if(!user) {
+        res.status(404).json('user not found')
+        return
+    }
+    const post = await PostModel.findById(comment_to).exec();
+    if(!post) {
+        res.status(404).json('post not found')
         return
     }
     const newComment = new CommentModel({author, comment_to, comment});
@@ -18,7 +30,7 @@ exports.store = async (req, res) => {
     res.status(201).json(newComment);
 };
 
-// Find a comment with user details
+// get a comment with user details
 exports.show = async (req, res) => {
     const {id} = req.params;
     const comment = await CommentModel.findById(id)
@@ -37,6 +49,7 @@ exports.show = async (req, res) => {
     res.json(comment);
 };
 
+// delete a comment
 exports.delete = async (req, res) => {
     const {id} = req.params;
     const comment = await CommentModel.findById(id).exec();
@@ -55,41 +68,3 @@ exports.delete = async (req, res) => {
     await CommentModel.findByIdAndDelete(id).exec();
     res.sendStatus(204);
 }
-
-// Add a reply to a comment PL-56
-exports.store = async (req, res) => {
-    const {author, reply_to, reply} = req.body;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        res.status(422).json({errors: errors})
-        return
-    }
-    const newReply = new CommentModel({author, reply_to, reply})
-    await newReply.save();
-    await CommentModel.findByIdAndUpdate(
-        reply_to,
-        {$addToSet: {replies: newReply._id}}
-    )
-    res.status(201).json(newReply);
-}
-
-// Get a reply PL-65
-exports.showReply = async (req, res) => {
-    const {id} = req.params;
-    const reply = await CommentModel.findById(id)
-        .populate("author",{avatar:1, nickname:1, username:1})
-        .populate("reply_to", {username:1})
-        .exec()
-    if (!reply) {
-        res.status(404).json({error: "reply not found"})
-        return
-    }
-    if (!reply.reply) {
-        res.status(404).json({error: "this is a comment, not a reply"})
-        return
-    }
-    res.json(reply)
-}
-
-
-
