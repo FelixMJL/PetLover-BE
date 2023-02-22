@@ -5,8 +5,8 @@ const {validationResult} = require("express-validator");
 exports.store = async (req, res) => {
     const {author, comment_to, comment} = req.body;
     const errors = validationResult(req);
-    if(!errors.isEmpty()) {
-        res.status(422).json({errors:errors})
+    if (!errors.isEmpty()) {
+        res.status(422).json({errors: errors})
         return
     }
     const newComment = new CommentModel({author, comment_to, comment});
@@ -22,12 +22,16 @@ exports.store = async (req, res) => {
 exports.show = async (req, res) => {
     const {id} = req.params;
     const comment = await CommentModel.findById(id)
-        .populate('author',{avatar: 1, username: 1, nickname: 1})
+        .populate('author', {avatar: 1, username: 1, nickname: 1})
         .populate('replies')
-        .populate({path:'replies',populate:{path:'author'}})
+        .populate({path: 'replies', populate: {path: 'author'}})
         .exec();
     if (!comment) {
         res.status(404).json({error: 'comment not found'});
+        return;
+    }
+    if (!comment.comment) {
+        res.status(404).json({error: 'this is a reply, not a comment'});
         return;
     }
     res.json(comment);
@@ -36,8 +40,8 @@ exports.show = async (req, res) => {
 exports.delete = async (req, res) => {
     const {id} = req.params;
     const comment = await CommentModel.findById(id).exec();
-    if(!comment) {
-        res.status(404).json({error:'this comment not found'})
+    if (!comment) {
+        res.status(404).json({error: 'this comment not found'})
         return
     }
     await PostModel.findByIdAndUpdate(
@@ -56,11 +60,11 @@ exports.delete = async (req, res) => {
 exports.store = async (req, res) => {
     const {author, reply_to, reply} = req.body;
     const errors = validationResult(req);
-    if(!errors.isEmpty()) {
-        res.status(422).json({errors:errors})
+    if (!errors.isEmpty()) {
+        res.status(422).json({errors: errors})
         return
     }
-    const newReply = new CommentModel({author,reply_to,reply})
+    const newReply = new CommentModel({author, reply_to, reply})
     await newReply.save();
     await CommentModel.findByIdAndUpdate(
         reply_to,
@@ -68,3 +72,24 @@ exports.store = async (req, res) => {
     )
     res.status(201).json(newReply);
 }
+
+// Get a reply PL-65
+exports.showReply = async (req, res) => {
+    const {id} = req.params;
+    const reply = await CommentModel.findById(id)
+        .populate("author",{avatar:1, nickname:1, username:1})
+        .populate("reply_to", {username:1})
+        .exec()
+    if (!reply) {
+        res.status(404).json({error: "reply not found"})
+        return
+    }
+    if (!reply.reply) {
+        res.status(404).json({error: "this is a comment, not a reply"})
+        return
+    }
+    res.json(reply)
+}
+
+
+
