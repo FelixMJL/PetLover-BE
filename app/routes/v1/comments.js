@@ -8,6 +8,7 @@ const commentRouter = Router();
 commentRouter.post('/comments', authGuard, commentValidation.store, comments.store);
 commentRouter.post('/comments/replies', authGuard, replyValidation.store, comments.store);
 commentRouter.get('/comments/:id', authGuard, comments.show);
+commentRouter.get('/comments/replies/:id', authGuard, comments.showReply);
 commentRouter.delete('/comments/:id', authGuard, comments.delete);
 
 module.exports = commentRouter;
