@@ -12,8 +12,9 @@ postRouter.use(authGuard);
 postRouter.get('', posts.index);
 postRouter.post('', posts.store);
 postRouter.delete('/:id', posts.delete);
-postRouter.get('/users/:id', posts.getAllPostsOfFollowing);
 postRouter.get('/:id', posts.show);
+postRouter.get('/users/:id', posts.getAllPostsOfFollowing);
+
 
 
 
