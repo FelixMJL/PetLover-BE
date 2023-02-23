@@ -5,8 +5,8 @@ const userRouter = Router();
 
 userRouter.post('/users', users.registration);
 userRouter.post('/users/login', users.login);
-userRouter.get('/users', authGuard,users.index);
-userRouter.get('/users/:id', authGuard,users.show);
+userRouter.get('/users', authGuard, users.index);
+userRouter.get('/users/:id', authGuard, users.show);
 userRouter.put('/users/:id', authGuard, users.update);
 userRouter.post('/users/:currentUserId/following/:targetUserId', authGuard, users.followAUser);
 userRouter.delete('/users/:currentUserId/unfollowing/:targetUserId', authGuard, users.unfollowAUser);

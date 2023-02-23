@@ -11,11 +11,6 @@ const replyRouter = require("../app/routes/v1/replies");
 
 
 const startServer = () => {
-    ////////////////////////////////
-    // 1. init express
-    // 2. listen to server
-    // 3. return which can use later
-    ////////////////////////////////
     const application = express();
 
     application.listen(config.port, err => {
@@ -32,13 +27,6 @@ const startServer = () => {
 }
 
 module.exports = () => {
-    ////////////////////////////////
-    // 1. call the function above
-    // 2. cors (https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
-    // 3. return which can use later
-    // 4. change to json
-    // 5. router
-    ////////////////////////////////
     const app = startServer()
     app.use(cors())
     app.use(express.json())

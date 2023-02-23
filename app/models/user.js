@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const {Schema, model} = require('mongoose');
 const {isEmail} = require("validator");
 const bcrypt = require("bcrypt");
 
@@ -64,7 +64,7 @@ schema.methods.hashPassword = async function () {
 };
 
 schema.methods.validatePassword = async function (password) {
-    return  bcrypt.compare(password, this.password);
+    return bcrypt.compare(password, this.password);
 };
 
 schema.methods.toJSON = function () {
@@ -80,4 +80,4 @@ schema.methods.toJSON = function () {
     return userObject;
 };
 
-module.exports = model('User',schema)
+module.exports = model('User', schema)
