@@ -1,14 +1,16 @@
 const UserModel = require('../models/user')
 const {generateToken} = require('../utils/jwt');
+const {validationResult} = require("express-validator");
 
 //users registration by username password nickname email PL-41 PL-49
 //POST localhost:3000/api/v1/users
-exports.registration = async (req, res) => {
+exports.register = async (req, res) => {
     try {
         const {username, password, nickname, email} = req.body;
-        if (!username || !password || !nickname || !email) {
-            res.status(401).json({error: 'register info is not complete'});
-            return;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.status(422).json({errors: errors})
+            return
         }
         if (await UserModel.findOne({username}).exec()) {
             res.send(`User name --${username}-- has been used please change another one`)
@@ -35,9 +37,10 @@ exports.registration = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const {email, password} = req.body
-        if (!email || !password) {
-            res.status(401).json({error: 'login info is not complete'});
-            return;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.status(422).json({errors: errors})
+            return
         }
         const user = await UserModel.findOne({email}).exec()
         if (!user) {
@@ -92,7 +95,11 @@ exports.update = async (req, res) => {
             introduction,
             website_url,
         } = req.body
-
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.status(422).json({errors: errors})
+            return
+        }
         const userUpdated = await UserModel.findByIdAndUpdate(
             id,
             {
