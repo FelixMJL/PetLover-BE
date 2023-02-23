@@ -11,12 +11,12 @@ exports.store = async (req, res) => {
         return
     }
     const user = await UserModel.findById(author).exec();
-    if(!user) {
+    if (!user) {
         res.status(404).json('user not found')
         return
     }
     const comment = await CommentModel.findById(reply_to).exec();
-    if(!comment) {
+    if (!comment) {
         res.status(404).json('comment not found')
         return
     }
@@ -33,12 +33,29 @@ exports.store = async (req, res) => {
 exports.show = async (req, res) => {
     const {id} = req.params;
     const reply = await CommentModel.findById(id)
-        .populate("author",{avatar:1, nickname:1, username:1})
-        .populate("reply_to", {username:1})
+        .populate("author", {avatar: 1, nickname: 1, username: 1})
+        .populate("reply_to", {username: 1})
         .exec()
     if (!reply) {
         res.status(404).json({error: "reply not found"})
         return
     }
     res.json(reply)
+}
+
+// Delete a reply pl-58
+exports.delete = async (req, res) => {
+    const {id} = req.params;
+    const reply = await CommentModel.findById(id).exec();
+    if (!reply) {
+        res.status(404).json({error: "reply not found"})
+        return
+    }
+    await CommentModel.findOneAndUpdate(
+        reply.reply_to,
+        {$pull: {replies: id}},
+        {new: true}
+    ).exec();
+    await CommentModel.findByIdAndDelete(id).exec();
+    res.sendStatus(204);
 }
