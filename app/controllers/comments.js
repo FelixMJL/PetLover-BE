@@ -12,12 +12,12 @@ exports.store = async (req, res) => {
         return
     }
     const user = await UserModel.findById(author).exec();
-    if(!user) {
+    if (!user) {
         res.status(404).json('user not found')
         return
     }
     const post = await PostModel.findById(comment_to).exec();
-    if(!post) {
+    if (!post) {
         res.status(404).json('post not found')
         return
     }
@@ -64,6 +64,7 @@ exports.delete = async (req, res) => {
                 comments: id
             }
         },
+        {new: true}
     ).exec()
     await CommentModel.findByIdAndDelete(id).exec();
     res.sendStatus(204);
