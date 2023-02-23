@@ -1,5 +1,5 @@
 const expressLoader = require('./express')
 
-exports.init =() => {
+exports.init = () => {
     expressLoader();
 }
