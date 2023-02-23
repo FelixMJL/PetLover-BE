@@ -6,7 +6,7 @@ const {generateToken} = require('../utils/jwt');
 exports.registration = async (req, res) => {
     try {
         const {username, password, nickname, email} = req.body;
-        if(!username||!password||!nickname||!email){
+        if (!username || !password || !nickname || !email) {
             res.status(401).json({error: 'register info is not complete'});
             return;
         }
@@ -23,7 +23,7 @@ exports.registration = async (req, res) => {
         const user = new UserModel({username, nickname, email, password});
         await user.hashPassword();
         await user.save();
-        const token = generateToken({id: user.id,email}); // roles: []
+        const token = generateToken({id: user.id, email}); // roles: []
         res.status(201).json({email, token});
     } catch (e) {
         res.status(500).json({error: 'server error'})
@@ -35,7 +35,7 @@ exports.registration = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const {email, password} = req.body
-        if(!email||!password){
+        if (!email || !password) {
             res.status(401).json({error: 'login info is not complete'});
             return;
         }
@@ -45,13 +45,13 @@ exports.login = async (req, res) => {
             return;
         }
 
-        if (! await user.validatePassword(password.toString())) {
+        if (!await user.validatePassword(password.toString())) {
             res.status(401).json({error: 'invalid email or password'});
             return;
         }
-        const token = generateToken({id: user.id,email}); // roles: []
+        const token = generateToken({id: user.id, email}); // roles: []
         res.status(201).json({email, token});
-    } catch(e){
+    } catch (e) {
         res.status(500).send({error: 'server error'})
     }
 }
@@ -166,37 +166,37 @@ exports.unfollowAUser = async (req, res) => {
 // show one user's followings
 exports.getAllFollowingsOfAUser = async (req, res) => {
     try {
-        const { id } = req.params
+        const {id} = req.params
         const user = await UserModel.findById(id)
         const followings = await UserModel.findById(id).populate(
             'following',
             {avatar: 1, username: 1, nickname: 1, introduction: 1}
         ).exec()
         if (!user) {
-            res.status(404).json({ error: "user not exist" })
+            res.status(404).json({error: "user not exist"})
             return
         }
         res.json(followings)
     } catch (error) {
-        res.status(404).json({error:"id must be a string of 12 bytes or a string of 24 hex characters or an integer"})
+        res.status(404).json({error: "id must be a string of 12 bytes or a string of 24 hex characters or an integer"})
     }
 }
 
 // show one user's followers
 exports.getAllFollowersOfAUser = async (req, res) => {
     try {
-        const { id } = req.params
+        const {id} = req.params
         const user = await UserModel.findById(id)
         const followers = await UserModel.findById(id).populate(
             'followers',
             {avatar: 1, username: 1, nickname: 1, introduction: 1}
         ).exec()
         if (!user) {
-            res.status(404).json({ error: "user not exist" })
+            res.status(404).json({error: "user not exist"})
             return
         }
         res.json(followers)
     } catch (error) {
-        res.status(404).json({error:"id must be a string of 12 bytes or a string of 24 hex characters or an integer"})
+        res.status(404).json({error: "id must be a string of 12 bytes or a string of 24 hex characters or an integer"})
     }
 }
