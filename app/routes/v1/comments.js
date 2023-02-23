@@ -1,7 +1,6 @@
 const comments = require('../../controllers/comments');
 const {Router} = require('express');
 const authGuard = require("../../middleware/authGuards");
-const replyValidation = require("../../validators/replyValidation")
 const commentValidation = require("../../validators/commentValidation")
 const commentRouter = Router();
 
