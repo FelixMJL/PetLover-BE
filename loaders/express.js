@@ -8,6 +8,7 @@ const commentRouter = require("../app/routes/v1/comments");
 const userRouter = require("../app/routes/v1/users");
 const postRouter = require("../app/routes/v1/posts");
 const replyRouter = require("../app/routes/v1/replies");
+const healthCheckRouter = require("../app/routes/v1/healthCheck");
 
 
 const startServer = () => {
@@ -34,6 +35,7 @@ module.exports = () => {
     app.use(config.api.prefix, commentRouter);
     app.use(config.api.prefix, postRouter);
     app.use(config.api.prefix, replyRouter);
+    app.use(config.api.prefix, healthCheckRouter);
     app.use(errorHandler);
 
     return app;
