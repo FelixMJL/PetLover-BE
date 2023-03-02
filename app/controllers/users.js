@@ -6,6 +6,7 @@ const {validationResult} = require("express-validator");
 //POST localhost:3000/api/v1/users
 exports.register = async (req, res) => {
     const {username, password, nickname, email} = req.body;
+    const avatar = "https://pet-lover.s3.ap-southeast-2.amazonaws.com/avatar/default_profile.png";
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.status(422).json({errors: errors})
@@ -21,11 +22,12 @@ exports.register = async (req, res) => {
         return;
     }
 
-    const user = new UserModel({username, nickname, email, password});
+    const user = new UserModel({username, nickname, email, password, avatar});
     await user.hashPassword();
     await user.save();
-    const token = generateToken({id: user.id, email}); // roles: []
-    res.status(201).json({email, token});
+    const token = generateToken({id: user.id, email});
+    const id = user.id;
+    res.status(201).json({id, token});
 }
 
 // user login PL-50
