@@ -39,7 +39,7 @@ pipeline {
         }
 
         stage('Deploy to prod confirmation') {
-            steps {
+            // steps {
                 // timeout(time: 1, unit: 'HOURS'){
                     input {
                         message "Do you agree to deploy codes in PRODUCTION environment?"
@@ -51,7 +51,7 @@ pipeline {
                         }
                     }
                 // }
-            }
+            // }
         }
 
         stage ('Docker build') {
