@@ -42,8 +42,8 @@ pipeline {
             steps {
                 timeout(time: 1, unit: 'HOURS'){
                     input {
-                        message "Do you agree to deploy codes in PRODUCTION environment?"
-                        ok "Yes, I agree."
+                        message: "Do you agree to deploy codes in PRODUCTION environment?"
+                        ok: "Yes, I agree."
                         // authorized usrs account
                         // submitter "PetLover-dev"
                         parameters {
