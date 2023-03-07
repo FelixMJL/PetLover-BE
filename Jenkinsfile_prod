@@ -9,31 +9,51 @@ pipeline {
         AWS_CRED = "AWS_PetLover"
         AWS_REGION = "ap-southeast-2"
 
-        PETLOVER_DEV_REPO = "pet-lover-uat"
+        PETLOVER_DEV_REPO = "pet-lover-prod"
         IMAGE_NAME = "$PETLOVER_DEV_REPO"
 
         IMAGE_TAG = "${env.BUILD_TAG}"
         ECR_PASSWORD_STDIN = "046381260578.dkr.ecr.ap-southeast-2.amazonaws.com"
         REPOSITORY_URI = "${ECR_PASSWORD_STDIN}/${IMAGE_NAME}"
 
-        ECS_CLUSTER = "uat-cluster"
-        ECS_SERVICE = "uat-service"
-        ECS_TASK_DEFINITION = "uat-task"
+        ECS_CLUSTER = "prod-cluster"
+        ECS_SERVICE = "prod-service"
+        ECS_TASK_DEFINITION = "prod-task"
     } 
 
     stages{
-        stage('Snyk Scan') {
+        stage('Install dependency')
+        {
+            steps{
+                echo "Installing packages"
+                sh 'npm install'
+            }          
+        }
+
+        stage('Unit test')
+        {
+            steps{
+             echo "Testing..."
+            //  sh 'npm run test'
+            }          
+        }
+
+        stage('Deploy to prod confirmation') {
             steps {
-                echo 'Testing...'
-                snykSecurity(
-                failOnIssues: false,
-                snykInstallation: 'snyk@latest',
-                snykTokenId: 'snyk-api-token',
-                additionalArguments: '--severity-threshold=high'
-                )
+                timeout(time: 1, unit: 'HOURS'){
+                    input {
+                        message "Do you agree to deploy codes in PRODUCTION environment?"
+                        ok "Yes, I agree."
+                        // authorized usrs account
+                        // submitter "PetLover-dev"
+                        parameters {
+                            string (name: 'PERSON', defaultValue: 'Plz Input Your Name', description:'input leader name')
+                        }
+                    }
+                }
             }
         }
-    
+
         stage ('Docker build') {
             steps {
                 script {
