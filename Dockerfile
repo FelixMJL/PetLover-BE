@@ -1,23 +1,14 @@
-# Base image
-FROM node:14
+# Install dependencies only when needed
+FROM node:18-alpine 
 
-# Set working directory
-WORKDIR /usr/src/app
+#Next we create a directory to hold the application code inside the image
+WORKDIR /app
+# Install dependencies based on the preferred package manager
+COPY ["package.json", "package-lock.json", "./"]
 
-# Set environment variables
-ENV CONNECTION_STRING=${MONGODB_URI}
-
-# Copy package.json and package-lock.json
-COPY package*.json .
-
-# Install dependencies
+# RUN yarn install --production=true
 RUN npm ci
-
-# Copy the rest of the application
+#To bundle your app's source code inside the Docker image, use the COPY instruction:
 COPY . .
 
-# Expose the port
-EXPOSE 3000
-
-# Run the application
-CMD [ "npm", "run", "dev" ]
+CMD ["npm", "run", "dev"]
