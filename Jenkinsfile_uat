@@ -82,7 +82,7 @@ pipeline {
              // send message it was failsure
             slackSend channel: 'pet-lover',
             message: "${IMAGE_NAME} UAT Backend Update Docker Image and Deployment Number ${BUILD_NUMBER} FAILED!"
-            emailext(attachLog: true, body: '看测试结果啦', subject: "UAT ${IMAGE_NAME} ${BUILD_NUMBER} FAILED", to: 'jadesure17@gmail.com')
+            emailext(attachLog: true, body: '看测试结果啦', subject: "UAT ${IMAGE_NAME} ${BUILD_NUMBER} FAILED", to: 'no-reply-petlover-notify@outlook.com')
             echo "uhm... 我觉得不太行！"
         }
 
@@ -90,7 +90,7 @@ pipeline {
             // send message it was success
             slackSend channel: 'pet-lover',
             message: "${IMAGE_NAME} UAT Backend Update Docker Image and Deployment Number ${BUILD_NUMBER} SUCCEED!"
-            emailext(attachLog: true, body: '看测试结果啦', subject: "UAT ${IMAGE_NAME} ${BUILD_NUMBER} SUCCEED", to: 'jadesure17@gmail.com')
+            emailext(attachLog: true, body: '看测试结果啦', subject: "UAT ${IMAGE_NAME} ${BUILD_NUMBER} SUCCEED", to: 'no-reply-petlover-notify@outlook.com')
             echo "老铁！恭喜你，成功了呀!"
         }
 
