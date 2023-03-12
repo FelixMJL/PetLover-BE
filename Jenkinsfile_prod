@@ -22,7 +22,7 @@ pipeline {
     } 
 
     stages{
-        stage('Install dependency')
+        stage('NPM Install dependency')
         {
             steps{
                 echo "Installing packages"
@@ -40,7 +40,7 @@ pipeline {
 
         stage('Deploy to prod confirmation') {
             steps {
-                timeout(time: 1, unit: 'HOURS'){
+                timeout(time: 3, unit: 'HOURS'){
                     input (
                         message: "Do you agree to deploy codes in PRODUCTION environment?",
                         ok: "Yes, I agree.",
@@ -102,7 +102,7 @@ pipeline {
              // send message it was failsure
             slackSend channel: 'pet-lover',
             message: "${IMAGE_NAME} UAT Backend Update Docker Image and Deployment Number ${BUILD_NUMBER} FAILED!"
-            emailext(attachLog: true, body: '看测试结果啦', subject: "UAT ${IMAGE_NAME} ${BUILD_NUMBER} FAILED", to: 'jadesure17@gmail.com')
+            emailext(attachLog: true, body: '看测试结果啦', subject: "PROD ${IMAGE_NAME} ${BUILD_NUMBER} FAILED", to: 'jadesure17@gmail.com')
             echo "uhm... 我觉得不太行！"
         }
 
@@ -110,7 +110,7 @@ pipeline {
             // send message it was success
             slackSend channel: 'pet-lover',
             message: "${IMAGE_NAME} UAT Backend Update Docker Image and Deployment Number ${BUILD_NUMBER} SUCCEED!"
-            emailext(attachLog: true, body: '看测试结果啦', subject: "UAT ${IMAGE_NAME} ${BUILD_NUMBER} SUCCEED", to: 'jadesure17@gmail.com')
+            emailext(attachLog: true, body: '看测试结果啦', subject: "PROD ${IMAGE_NAME} ${BUILD_NUMBER} SUCCEED", to: 'jadesure17@gmail.com')
             echo "老铁！恭喜你，成功了呀!"
         }
 
