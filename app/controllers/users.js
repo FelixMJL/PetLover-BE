@@ -13,12 +13,12 @@ exports.register = async (req, res) => {
         return
     }
     if (await UserModel.findOne({username}).exec()) {
-        res.send(`User name --${username}-- has been used please change another one`)
+        res.status(409).send(`Username already exists.`)
         return;
     }
 
     if (await UserModel.findOne({email}).exec()) {
-        res.send(`E-mail --${email}-- has been used please change another one`)
+        res.status(409).send(`E-mail already exists.`)
         return;
     }
 
