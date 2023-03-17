@@ -3,19 +3,24 @@ const UserModel = require('../models/user')
 
 // Create a post
 exports.store = async (req, res) => {
-    const {author, content, photo, video} = req.body;
-    const post = new PostModel({author, content, photo, video});
-    const savedPost = await post.save();
-    await UserModel.findByIdAndUpdate(
-        author,
-        {
-            $push: {
-                posts: savedPost._id
-            }
-        }
-    )
-    await post.save();
-    res.status(201).json(post)
+    const {author, content, file_type, file_url} = req.body;
+    const post = new PostModel({author, content, file_type, file_url});
+    try {
+        const savedPost = await post.save();
+        await UserModel.findByIdAndUpdate(
+          author,
+          {
+              $push: {
+                  posts: savedPost._id
+              }
+          }
+        )
+        await post.save();
+        res.status(201).json(post)
+    } catch (e) {
+        res.status(400).json({message:'At least one of content or file_url needs to be provided.'})
+    }
+    
 }
 
 // Find all posts with user detail
