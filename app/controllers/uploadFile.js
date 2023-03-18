@@ -1,5 +1,5 @@
 const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
-const { uuid } = require('uuidv4');
+const { v4: uuid } = require('uuid');
 
 const s3 = new S3Client();
 const BUCKET = process.env.BUCKET;
