@@ -65,8 +65,11 @@ exports.index = async (req, res) => {
 // Find a user by ID with his all posts spread PL-43
 // GET localhost:3000/api/v1/users/:id
 exports.show = async (req, res) => {
-    const {id} = req.params
-    const user = await UserModel.findById(id).populate('posts').exec()
+    const {id} = req.params;
+    const user = await UserModel.findById(id).populate({
+        path: 'posts',
+        options: { sort: { 'created_at': -1 } }
+    }).exec();
     if (!user) {
         res.status(404).json({error: "User not exist"})
         return
