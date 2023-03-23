@@ -1,0 +1,132 @@
+pipeline {
+    agent any
+    
+    options {
+        ansiColor('xterm')
+    }
+
+    environment {
+        AWS_CRED = "AWS_PetLover"
+        AWS_REGION = "ap-southeast-2"
+
+        PETLOVER_DEV_REPO = "pet-lover-prod"
+        IMAGE_NAME = "$PETLOVER_DEV_REPO"
+
+        IMAGE_TAG = "${env.BUILD_TAG}"
+        ECR_PASSWORD_STDIN = "046381260578.dkr.ecr.ap-southeast-2.amazonaws.com"
+        REPOSITORY_URI = "${ECR_PASSWORD_STDIN}/${IMAGE_NAME}"
+
+        ECS_CLUSTER = "prod-cluster"
+        ECS_SERVICE = "prod-service"
+        ECS_TASK_DEFINITION = "prod-task"
+    } 
+
+    stages{
+        stage('NPM Install dependency')
+        {
+            steps{
+                echo "Installing packages"
+                sh 'npm install'
+            }          
+        }
+
+        stage('Unit test')
+        {
+            steps{
+             echo "Testing..."
+            //  sh 'npm run test'
+            }          
+        }
+
+        stage('Deploy to prod confirmation') {
+            steps {
+                timeout(time: 3, unit: 'HOURS'){
+                    input (
+                        message: "Do you agree to deploy codes in PRODUCTION environment?",
+                        ok: "Yes, I agree.",
+                        // authorized usrs account
+                        // submitter "PetLover-dev"
+                        parameters:[
+                            string (name: 'PERSON', defaultValue: '', description:'input leader name')
+                        ]
+                    )
+                }
+            }
+        }
+
+        stage ('Docker build') {
+            steps {
+                script {
+                    sh 'docker build -t ${IMAGE_NAME} .'
+				}
+            }
+        }
+
+        stage ('Docker tag image and push docker image to ECR'){
+            steps{
+                withAWS(credentials: AWS_CRED, region: AWS_REGION){
+                    ansiColor('xterm') {
+                        sh '''
+                            aws ecr get-login-password \
+                                --region ${AWS_REGION} | docker login \
+                                --username AWS \
+                                --password-stdin ${ECR_PASSWORD_STDIN}
+
+                            docker tag ${IMAGE_NAME}:latest ${REPOSITORY_URI}:${BUILD_NUMBER}
+                            docker tag ${IMAGE_NAME}:latest ${REPOSITORY_URI}:latest
+
+                            docker push ${REPOSITORY_URI}:latest
+                            docker push ${REPOSITORY_URI}:${BUILD_NUMBER}
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage ('Update ECS service'){
+            steps{
+                 withAWS(credentials: AWS_CRED, region: AWS_REGION){
+                    sh 'aws ecs update-service \
+                        --cluster ${ECS_CLUSTER} \
+                        --service ${ECS_SERVICE} \
+                        --task-definition ${ECS_TASK_DEFINITION} \
+                        --force-new-deployment'
+                 }
+            }
+        }
+    }
+    
+    post {
+
+        failure {
+             // send message it was failsure
+            slackSend channel: 'pet-lover',
+            message: "${IMAGE_NAME} UAT Backend Update Docker Image and Deployment Number ${BUILD_NUMBER} FAILED!"
+            emailext(attachLog: true, body: '看测试结果啦', subject: "PROD ${IMAGE_NAME} ${BUILD_NUMBER} FAILED", to: 'no-reply-petlover-notify@outlook.com')
+            echo "uhm... 我觉得不太行！"
+        }
+
+        success {
+            // send message it was success
+            slackSend channel: 'pet-lover',
+            message: "${IMAGE_NAME} UAT Backend Update Docker Image and Deployment Number ${BUILD_NUMBER} SUCCEED!"
+            emailext(attachLog: true, body: '看测试结果啦', subject: "PROD ${IMAGE_NAME} ${BUILD_NUMBER} SUCCEED", to: 'no-reply-petlover-notify@outlook.com')
+            echo "老铁！恭喜你，成功了呀!"
+        }
+
+        always {
+            script {
+                try{
+                    // docker images -qa | xargs docker rmi -f
+                    sh'''
+                        docker rmi -f $(docker images -q)
+                        docker system prune -f
+                        cleanWs()
+                    '''
+                } catch (Exception e) {
+                    echo "docker clean failed"
+                }
+            }
+        }
+    }
+}
