@@ -45,7 +45,7 @@ exports.login = async (req, res) => {
     }
     const user = await UserModel.findOne({email}).exec()
     if (!user) {
-        res.status(401).json({error: 'Invalid email or password'});
+        res.status(404).json({error: 'The email address you entered does not exist'});
         return;
     }
 
