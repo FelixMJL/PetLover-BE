@@ -1,19 +1,18 @@
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
-const AWS = require("aws-sdk");
+const { defaultProvider } = require("@aws-sdk/credential-provider-node");
 const { v4: uuid } = require("uuid");
 
 const region = process.env.AWS_REGION;
 const BUCKET = process.env.BUCKET;
 
-// Configure AWS credentials
-AWS.config.update({
-	accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-	secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-	region: region,
-});
-
 // Initialize S3 client
-const s3 = new S3Client({ region: region });
+const s3 = new S3Client({
+	region: region,
+	credentials: defaultProvider({
+		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+	}),
+});
 
 const uploadToS3 = async ({ file }) => {
 	const key = `userFiles/${uuid()}`;
