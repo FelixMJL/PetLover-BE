@@ -20,6 +20,7 @@
     "homepage": "https://bitbucket.org/pet-lover/pet-lover-back-end#readme",
     "dependencies": {
         "@aws-sdk/client-s3": "^3.294.0",
+        "aws-sdk": "^2.1342.0",
         "bcrypt": "^5.1.0",
         "cors": "^2.8.5",
         "dotenv": "^16.0.3",
