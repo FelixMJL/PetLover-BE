@@ -7,6 +7,10 @@ const {validationResult} = require("express-validator");
 exports.register = async (req, res) => {
     const {username, password, nickname, email} = req.body;
     const avatar = "https://pet-lover.s3.ap-southeast-2.amazonaws.com/avatar/default_profile.png";
+    const location = "";
+    const introduction = "";
+    const website_url = "";
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.status(422).json({errors: errors})
@@ -22,7 +26,7 @@ exports.register = async (req, res) => {
         return;
     }
 
-    const user = new UserModel({username, nickname, email, password, avatar});
+    const user = new UserModel({username, nickname, email, password, avatar, location, introduction, website_url});
     await user.hashPassword();
     await user.save();
     const token = generateToken({id: user.id, email});
