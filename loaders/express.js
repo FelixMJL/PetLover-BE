@@ -11,6 +11,7 @@ const replyRouter = require("../app/routes/v1/replies");
 const healthCheckRouter = require("../app/routes/v1/healthCheck");
 const authTokenRouter = require("../app/routes/v1/authToken");
 const uploadRouter = require("../app/routes/v1/upload");
+const openaiRouter = require("../app/routes/v1/openai");
 
 
 const startServer = () => {
@@ -40,6 +41,7 @@ module.exports = () => {
     app.use(config.api.prefix, healthCheckRouter);
     app.use(config.api.prefix, authTokenRouter);
     app.use(config.api.prefix, uploadRouter);
+    app.use(config.api.prefix, openaiRouter);
     app.use(errorHandler);
 
     return app;
