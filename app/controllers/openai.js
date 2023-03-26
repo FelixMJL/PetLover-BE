@@ -21,6 +21,6 @@ exports.chatGpt = async (req, res) => {
 		res.status(400).json({error: 'request error'})
 		return;
 	}
-	const str = response.data.choices[0].text.replace(/\n\n/g, '');
+	const str = response.data.choices[0].text.replace(/\n\n/g, '').replace(/？/g, '');
 	res.status(201).json(str)
 };
