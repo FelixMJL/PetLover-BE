@@ -24,3 +24,18 @@ exports.chatGpt = async (req, res) => {
 	const str = response.data.choices[0].text.replace(/\n\n/g, '').replace(/？/g, '');
 	res.status(201).json(str)
 };
+
+exports.imageEdits = async (req, res) => {
+	const { question } = req.body;
+	const response = await openai.createImage({
+		prompt: `${question}`,
+		n:4,
+		size:"256x256"
+	});
+	if(!response.data) {
+		res.status(400).json({error: 'request error'})
+		return;
+	}
+	const str = response.data.data;
+	res.status(201).json(str)
+};
