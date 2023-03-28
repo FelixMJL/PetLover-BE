@@ -30,7 +30,7 @@ pipeline {
         // modify this one if change ACR container registry name
         ACR_NAME = "petloverprod"
         ACR_IMAGE_NAME = "back-prod"
-        ACR_REGISTRY=${ACR_NAME}".azurecr.io"
+        ACR_REGISTRY="${ACR_NAME}.azurecr.io"
     } 
 
     stages{
