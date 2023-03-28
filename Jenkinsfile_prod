@@ -19,6 +19,18 @@ pipeline {
         ECS_CLUSTER = "prod-cluster"
         ECS_SERVICE = "prod-service"
         ECS_TASK_DEFINITION = "prod-task"
+
+        // for Azure ACR
+        APP_RESOURCE = "aks-backend"
+        // RESOURCE_GROUP = "TF-aks-prod-failover"
+        ENV = "prod-failover"
+
+        ARM = credentials('Azure_Principle_service')
+
+        // modify this one if change ACR container registry name
+        ACR_NAME = "petloverprod"
+        ACR_IMAGE_NAME = "back-prod"
+        ACR_REGISTRY=${ACR_NAME}".azurecr.io"
     } 
 
     stages{
@@ -79,6 +91,26 @@ pipeline {
                             docker push ${REPOSITORY_URI}:${BUILD_NUMBER}
                         '''
                     }
+                }
+            }
+        }
+
+        stage ('Docker tag image and push docker image to ACR'){
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'ACR_Login_Password', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh '''
+                        docker login ${ACR_REGISTRY} \
+                        -u ${USERNAME} 
+                        -p ${PASSWORD}
+
+                        docker login petloverprod.azurecr.io -u $USERNAME -p $PASSWORD
+
+                        docker tag ${IMAGE_NAME}:latest ${ACR_REGISTRY}/${ACR_IMAGE_NAME}/${IMAGE_NAME}:${BUILD_NUMBER}
+                        docker tag ${IMAGE_NAME}:latest ${ACR_REGISTRY}/${ACR_IMAGE_NAME}/${IMAGE_NAME}:latest
+
+                        docker push ${ACR_REGISTRY}/${ACR_IMAGE_NAME}/${IMAGE_NAME}:${BUILD_NUMBER}
+                        docker push ${ACR_REGISTRY}/${ACR_IMAGE_NAME}/${IMAGE_NAME}:latest
+                    '''
                 }
             }
         }
