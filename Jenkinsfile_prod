@@ -29,7 +29,7 @@ pipeline {
 
         // modify this one if change ACR container registry name
         ACR_NAME = "petloverprod"
-        ACR_IMAGE_NAME = "back-prod"
+        ACR_IMAGE_NAMESPACE = "back"
         ACR_REGISTRY="${ACR_NAME}.azurecr.io"
     } 
 
@@ -95,6 +95,8 @@ pipeline {
             }
         }
 
+        back/petlover-back
+
         stage ('Docker tag image and push docker image to ACR'){
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ACR_Login_Password', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -105,11 +107,11 @@ pipeline {
 
                         docker login petloverprod.azurecr.io -u $USERNAME -p $PASSWORD
 
-                        docker tag ${IMAGE_NAME}:latest ${ACR_REGISTRY}/${ACR_IMAGE_NAME}/${IMAGE_NAME}:${BUILD_NUMBER}
-                        docker tag ${IMAGE_NAME}:latest ${ACR_REGISTRY}/${ACR_IMAGE_NAME}/${IMAGE_NAME}:latest
+                        docker tag ${IMAGE_NAME}:latest ${ACR_REGISTRY}/${ACR_IMAGE_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}
+                        docker tag ${IMAGE_NAME}:latest ${ACR_REGISTRY}/${ACR_IMAGE_NAMESPACE}/${IMAGE_NAME}:latest
 
-                        docker push ${ACR_REGISTRY}/${ACR_IMAGE_NAME}/${IMAGE_NAME}:${BUILD_NUMBER}
-                        docker push ${ACR_REGISTRY}/${ACR_IMAGE_NAME}/${IMAGE_NAME}:latest
+                        docker push ${ACR_REGISTRY}/${ACR_IMAGE_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}
+                        docker push ${ACR_REGISTRY}/${ACR_IMAGE_NAMESPACE}/${IMAGE_NAME}:latest
                     '''
                 }
             }
