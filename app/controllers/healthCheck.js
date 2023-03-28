@@ -1,3 +1,3 @@
 exports.check = (req, res) => {
-    res.send("I am still alive.")
-}
+  res.send('I am still working.');
+};
