@@ -95,8 +95,7 @@ pipeline {
             }
         }
 
-        back/petlover-back
-
+    
         stage ('Docker tag image and push docker image to ACR'){
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ACR_Login_Password', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
