@@ -100,7 +100,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'ACR_Login_Password', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh '''
                         docker login ${ACR_REGISTRY} \
-                        -u ${USERNAME} 
+                        -u ${USERNAME} \
                         -p ${PASSWORD}
 
                         docker login petloverprod.azurecr.io -u $USERNAME -p $PASSWORD
