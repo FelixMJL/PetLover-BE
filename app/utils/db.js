@@ -8,7 +8,9 @@ const connectToDB = () => {
     }
     const db = mongoose.connection;
     db.on('connected', () => {
-        console.log(`DB connected, ${connectionString}`);
+        const halfLength = Math.ceil(connectionString.length / 2.5);
+        const displayString = connectionString.substring(0, halfLength) + ' ...';
+        console.log(`DB connected, ${displayString}`);
     });
     db.on('error', (error) => {
         console.error(error);
