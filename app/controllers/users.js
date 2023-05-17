@@ -6,7 +6,7 @@ const {validationResult} = require("express-validator");
 //POST localhost:3000/api/v1/users
 exports.register = async (req, res) => {
     const {username, password, nickname, email} = req.body;
-    const avatar = "https://pet-lover.s3.ap-southeast-2.amazonaws.com/avatar/default_profile.png";
+    const avatar = "https://dev-petlover.s3.ap-southeast-2.amazonaws.com/default/user.png";
     const location = "";
     const introduction = "";
     const website_url = "";
